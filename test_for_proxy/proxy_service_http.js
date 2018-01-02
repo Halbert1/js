@@ -30,12 +30,13 @@ function request(cReq, cRes) {
 
 function connect(cReq, cSock) {
     let u = url.parse('http://' + cReq.url);
-
+    console.log(`connect`);
     let pSock = net.connect(u.port, u.hostname, function() {
         cSock.write('HTTP/1.1 200 Connection Established\r\n\r\n');
         pSock.pipe(cSock);
     }).on('error', function(e) {
         cSock.end();
+        console.log(`connect catch err:${e}`);
     });
 
     cSock.pipe(pSock);
